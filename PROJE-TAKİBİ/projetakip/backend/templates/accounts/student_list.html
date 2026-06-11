@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Öğrenciler — Proje Takip{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1><i class="bi bi-people me-2" style="color:var(--gold-light);"></i>Öğrenciler</h1>
+        <div class="page-header-sub">Kayıtlı öğrenciler listesi</div>
+    </div>
+    <a href="{% url 'accounts:student_create' %}" class="btn btn-outline-light">
+        <i class="bi bi-person-plus me-1"></i>Öğrenci Ekle
+    </a>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Ad Soyad</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Öğrenci No</th>
+                    <th>E-posta</th>
+                    <th class="text-end">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for s in students %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width:32px;height:32px;background:var(--gold-pale);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--navy);flex-shrink:0;">
+                            {{ s.get_full_name|slice:":1" }}
+                        </div>
+                        <span style="font-weight:500;">{{ s.get_full_name }}</span>
+                    </div>
+                </td>
+                <td style="color:var(--text-muted);font-size:13px;">{{ s.username }}</td>
+                <td style="font-size:13px;">{{ s.student_number|default:"—" }}</td>
+                <td style="font-size:13px;color:var(--text-muted);">{{ s.email }}</td>
+                <td class="text-end">
+                    <a href="{% url 'accounts:student_edit' s.pk %}" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></a>
+                    <a href="{% url 'accounts:student_delete' s.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-5">
+                    <div class="empty-state py-2">
+                        <i class="bi bi-person-x"></i>
+                        <div style="font-size:14px;">Henüz öğrenci eklenmemiş</div>
+                        <a href="{% url 'accounts:student_create' %}" class="btn btn-primary btn-sm mt-3"><i class="bi bi-plus me-1"></i>İlk Öğrenciyi Ekle</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

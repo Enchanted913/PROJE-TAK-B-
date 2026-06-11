@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Öğrenciyi Sil — Proje Takip{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="confirm-card card">
+            <div class="confirm-header">
+                <i class="bi bi-exclamation-triangle" style="font-size:1.25rem;color:#991b1b;"></i>
+                <h3>Öğrenciyi Sil</h3>
+            </div>
+            <div class="confirm-body">
+                <p style="font-size:14px;color:var(--text-muted);margin-bottom:1.25rem;">
+                    <strong style="color:var(--navy);">{{ student.get_full_name }}</strong> isimli öğrenci kalıcı olarak silinecek.
+                </p>
+                <form method="post" class="d-flex gap-2">{% csrf_token %}
+                    <button class="btn btn-danger"><i class="bi bi-trash me-1"></i>Evet, Sil</button>
+                    <a href="{% url 'accounts:student_list' %}" class="btn btn-outline-secondary">İptal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
